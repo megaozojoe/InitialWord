@@ -192,9 +192,9 @@ public class App {
 	Words[] sortedArr = new Words[totalWords]; //creating sorted array
 
 	
-	wordsArr = reverseArr(wordsArr, totalWords);
+	wordsArr = reverseArr(wordsArr, totalWords); //reverse array
 
-	for(int q = 0; q < 20; q++) {
+	for(int q = 0; q < 20; q++) { //prints top 20 results
 		System.out.println(wordsArr[q].key + "       " + wordsArr[q].count);
 	}
 
