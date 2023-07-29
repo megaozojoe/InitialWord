@@ -34,10 +34,50 @@ public class App {
 	 * @param args for main method
 	 * @throws FileNotFoundException for opening file
 	 */
+	
+	
+    static void bubbleSort (Words arr[], int n) { //this will be to sort the array by the values highest value
+    	int i, j;
+    	Words temp;
+    	boolean swapped;
+    	
+    	for (i = 0; i < n; i++) { //setting up the swap function
+    		swapped = false;
+    		for (j = 0; j < n - i -1; j++) { //horrible o^2 runtime however, I do not think that I am penalized for runtime
+    			
+    			if(arr[j].count > arr[j+ 1].count) { //comparing values
+    				temp = arr[j]; //setting up temp value before swap
+    				arr[j] = arr[j + 1]; //executes the switch in the array.
+    				arr[j+1] = temp;
+    				swapped = true;
+    			}
+    			
+    		}
+    		
+    		if(swapped == false) { //if elements are not swapped break
+    			break;
+    		}
+    		
+    	}
+    }
+    
+    static Words[] reverseArr(Words arr[], int n) { //passing the array I want to reverse that has been sorted and the length
+    	Words[] temp = new Words[n]; //temp array the same length as the normal array
+    	int count = 0;
+    	
+    	for(int i = n; i != 0; i-- ) { //starting from the back of the array lol :)
+    		temp[count] = arr[i-1]; //these should be oppisistes that are going towards each other.
+    		count++;
+    	}
+    	
+    	
+    	return temp;
+    }
+    
     public static void main(String[] args) throws FileNotFoundException { //throwing exception based off of eclipse recommendation
 
         
-        File text = new File("C:\\Users\\matth\\Documents\\words\\src\\Poem.txt"); //setting file object
+        File text = new File("/Poem.txt"); //setting file object which should be in the same folder as the actual code. 
         Scanner input = new Scanner(text, "UTF-8"); //setting scanner object
 		Words[] wordsArr = new Words[100000]; //creating the words array
 
@@ -98,17 +138,14 @@ public class App {
         }
 
 
-		/*
-		for(int k = 0; k < totalWords; k++){//prints out result from the test :)
-			System.out.println(wordsArr[k]);
 
-		}
-		*/
 
 	String driverName = "mysql-connector-j-8.1.0";
 
+	
+	
 
-/*
+/* This current code will print to the server that is connected. However, currently testing without the server
 	try{
 		
     Class.forName(driverName);
@@ -116,6 +153,8 @@ public class App {
 		e.printStackTrace();
 	}
 */
+	
+	/*
 
 	try{ //creates teh connection to
     Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/word_occurances", "root", "megahose");
@@ -144,7 +183,22 @@ public class App {
 	}catch(SQLException e){
 		e.printStackTrace();
 	}
+	
+	*/
+	
 
+	bubbleSort(wordsArr, totalWords); //sorts the array
+	
+	Words[] sortedArr = new Words[totalWords]; //creating sorted array
+
+	
+	wordsArr = reverseArr(wordsArr, totalWords);
+
+	for(int q = 0; q < 20; q++) {
+		System.out.println(wordsArr[q].key + "       " + wordsArr[q].count);
+	}
+
+	
 	}
         
       
@@ -170,11 +224,20 @@ public class App {
     			sb.delete(sb.length()-2, sb.length() );
     		}
     	}
+    		
+ 
+    	
+    	if(sb != null && !sb.isEmpty()) { //this checks the string builder to make sure it is not empty or null
+    		if(sb.toString().equals("stylemarginleft")) { //checks if the string builder is stylemarginleft and deletes it 
+    			sb.delete(0, sb.length()); //start of word and end of word
+    		}
+    	}
     	
     	    	
     	return sb.toString(); //returns adjusted string
 
     }
+
 }
 
 class Words{ //create a words object that has the word and count
@@ -192,6 +255,8 @@ class Words{ //create a words object that has the word and count
 	}
 
 }
+
+
 
 
 
