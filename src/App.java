@@ -24,8 +24,6 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
@@ -48,7 +46,7 @@ public class App extends Application{
 		public void start(Stage primaryStage) { //setup for the basis of GUI
 			try {
 				root = new BorderPane();
-				Scene scene = new Scene(root,200,200);
+				Scene scene = new Scene(root,700,100);
 				scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 				primaryStage.setScene(scene);
 				primaryStage.show();
@@ -64,16 +62,22 @@ public class App extends Application{
 
 			
 			VBox vbox = new VBox(); //creates vbox
+			VBox wBox = new VBox(); //this is the wordBox
+			HBox bBox = new HBox();
 
-			Label wordLabel = new Label(wordsArr[buttonIndex].key); //This label will show the words that were processed
-			Label infoLabel = new Label("Use button to scroll through the most popular words in the Raven by Edgar Allen Poe."); //gives information
-			Label arrayLen = new  Label(buttonIndex +  " of " + totalWords );
-			root.setLeft(wordLabel);
-			//root.setLeft(infoLabel);
-			//root.setLeft(arrayLen);
+			Label wordLabel = new Label("\nWord: " + wordsArr[buttonIndex].key + ", Count: " + wordsArr[buttonIndex].count); //This label will show the words that were processed
+			Label infoLabel = new Label("Use button to scroll through the most popular words in the Raven by Edgar Allen Poe.\nSorted by most popular word first.\n"); //gives information
+			Label arrayLen = new  Label( "This is " +buttonIndex +  " out of " + totalWords + " words." );
 			
+			infoLabel.setStyle("-fx-font-family: Arial;-fx-font-size: 1.2em; -fx-font-weight: bold;");
+			wordLabel.setStyle("-fx-font-family: Arial;-fx-font-size: 1.2em; -fx-font-weight: bold;");
+			arrayLen.setStyle("-fx-font-family: Arial;-fx-font-size: 1.2em; -fx-font-weight: bold;");
 			
-			root.setCenter(vbox); //attempts to center it
+			vbox.getChildren().add(infoLabel);
+			vbox.getChildren().add(arrayLen);
+			vbox.getChildren().add(wordLabel);
+			root.setLeft(vbox);
+			
 			
 			Button nxtBtn = new Button("Next"); //create button
 			Button backBtn = new Button("Back");
@@ -82,7 +86,9 @@ public class App extends Application{
 				public void handle(ActionEvent arg0) {
 					if(buttonIndex != totalWords) { // this verifies that we do not overflow
 						buttonIndex++; //increase the count of words
-						wordLabel.setText(wordsArr[buttonIndex].key); //changes the labels text
+						wordLabel.setText("\nWord: " + wordsArr[buttonIndex].key + ", Count: " + wordsArr[buttonIndex].count); //changes the labels text
+						arrayLen.setText("This is " +buttonIndex +  " out of " + totalWords + " words.");
+						
 					}
 				}
 			});
@@ -91,12 +97,14 @@ public class App extends Application{
 					public void handle(ActionEvent arg0) {
 						if(buttonIndex != 0) { //this prevents underflow
 							buttonIndex = buttonIndex - 1; //decrease the count
-							wordLabel.setText(wordsArr[buttonIndex].key); //change the label
+							wordLabel.setText("\nWord: " + wordsArr[buttonIndex].key + ", Count: " + wordsArr[buttonIndex].count); //change the label
+							arrayLen.setText("This is " +buttonIndex +  " out of " + totalWords  + " words.");
 						}
 					}
 				});
-			root.setRight(nxtBtn);
-			root.setBottom(backBtn);
+			bBox.getChildren().add(nxtBtn);
+			bBox.getChildren().add(backBtn);
+			root.setRight(bBox);
 			
 		}
 	
