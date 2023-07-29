@@ -35,13 +35,6 @@ import javafx.stage.Stage;
 
 public class App extends Application{
 	
-	/***
-	 * 
-	 * @param args for main method
-	 * @throws FileNotFoundException for opening file
-	 */
-	
-	
 	
 		@Override
 		public void start(Stage primaryStage) { //setup for the basis of GUI
@@ -94,6 +87,12 @@ public class App extends Application{
     	return temp;
     }
     
+    
+	/***
+	 * 
+	 * @param args for main method
+	 * @throws FileNotFoundException for opening file
+	 */
     public static void main(String[] args) throws FileNotFoundException { //throwing exception based off of eclipse recommendation
 
         
@@ -224,8 +223,10 @@ public class App extends Application{
 	}
         
       
-
-    
+    /***
+     * @param in is A string from the poem is passed so that it can be cleaned up and added to the array
+     * @return This returns the modified string that has been clean of random chracters and excludes any html tags I have seen.
+     */
     public static  String cleanString(String in) {
     	char[] rem = {'<','>','"',',','!','-',':','%','&',';','=','@', '/', '.', '\'', '?'}; //characters to remove from string
     	StringBuilder sb = new StringBuilder(in);// string builder for deleting characters
