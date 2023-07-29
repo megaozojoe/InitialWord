@@ -1,5 +1,6 @@
 //Program by Matthew del Real
 
+
 //importing helpful packages
 import java.io.BufferedReader;
 import java.io.File;
@@ -16,6 +17,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javafx.stage.Stage;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
 
 
@@ -27,13 +33,27 @@ import java.sql.Statement;
  */
 
 
-public class App {
+public class App extends Application{
 	
 	/***
 	 * 
 	 * @param args for main method
 	 * @throws FileNotFoundException for opening file
 	 */
+	
+	
+	
+		@Override
+		public void start(Stage primaryStage) { //setup for the basis of GUI
+			try {
+				BorderPane root = new BorderPane();
+				Scene scene = new Scene(root,800,400);
+				primaryStage.setScene(scene);
+				primaryStage.show();
+			}catch(Exception e) {
+				e.printStackTrace(); //prints when error
+			}
+		}
 	
 	
     static void bubbleSort (Words arr[], int n) { //this will be to sort the array by the values highest value
@@ -84,6 +104,8 @@ public class App {
 		for(int z = 0; z < wordsArr.length; z++){ //intializing ever object
 			wordsArr[z] = new Words();
 		}
+		
+		launch(args);
 
 
 		int totalWords = 0;
@@ -228,7 +250,7 @@ public class App {
  
     	
     	if(sb != null && !sb.isEmpty()) { //this checks the string builder to make sure it is not empty or null
-    		if(sb.toString().equals("stylemarginleft")) { //checks if the string builder is stylemarginleft and deletes it 
+    		if(sb.toString().equals("stylemarginleft") || sb.toString().equals("span")) { //checks if the string builder is stylemarginleft and deletes it 
     			sb.delete(0, sb.length()); //start of word and end of word
     		}
     	}
@@ -239,6 +261,8 @@ public class App {
     }
 
 }
+
+
 
 class Words{ //create a words object that has the word and count
 	public String key = "";
