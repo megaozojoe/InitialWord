@@ -19,8 +19,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javafx.stage.Stage;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 
@@ -34,18 +40,64 @@ import javafx.stage.Stage;
 
 
 public class App extends Application{
-	
+	static BorderPane root;
+	public static Words[] wordsArr = new Words[100000]; //array of all the words used
+	public static int totalWords = 0; //count of the program
 	
 		@Override
 		public void start(Stage primaryStage) { //setup for the basis of GUI
 			try {
-				BorderPane root = new BorderPane();
-				Scene scene = new Scene(root,800,400);
+				root = new BorderPane();
+				Scene scene = new Scene(root,200,200);
+				scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 				primaryStage.setScene(scene);
 				primaryStage.show();
+				load();
 			}catch(Exception e) {
 				e.printStackTrace(); //prints when error
 			}
+		}
+		
+		private int buttonIndex = 0; //index for the button scrolling through the text
+		public void load(){
+			
+
+			
+			VBox vbox = new VBox(); //creates vbox
+
+			Label wordLabel = new Label(wordsArr[buttonIndex].key); //This label will show the words that were processed
+			Label infoLabel = new Label("Use button to scroll through the most popular words in the Raven by Edgar Allen Poe."); //gives information
+			Label arrayLen = new  Label(buttonIndex +  " of " + totalWords );
+			root.setLeft(wordLabel);
+			//root.setLeft(infoLabel);
+			//root.setLeft(arrayLen);
+			
+			
+			root.setCenter(vbox); //attempts to center it
+			
+			Button nxtBtn = new Button("Next"); //create button
+			Button backBtn = new Button("Back");
+			
+			nxtBtn.setOnAction(new EventHandler <ActionEvent>(){ //creates button handler
+				public void handle(ActionEvent arg0) {
+					if(buttonIndex != totalWords) { // this verifies that we do not overflow
+						buttonIndex++; //increase the count of words
+						wordLabel.setText(wordsArr[buttonIndex].key); //changes the labels text
+					}
+				}
+			});
+			
+				backBtn.setOnAction(new EventHandler <ActionEvent>(){ //creates button handler
+					public void handle(ActionEvent arg0) {
+						if(buttonIndex != 0) { //this prevents underflow
+							buttonIndex = buttonIndex - 1; //decrease the count
+							wordLabel.setText(wordsArr[buttonIndex].key); //change the label
+						}
+					}
+				});
+			root.setRight(nxtBtn);
+			root.setBottom(backBtn);
+			
 		}
 	
 	
@@ -98,16 +150,14 @@ public class App extends Application{
         
         File text = new File("/Poem.txt"); //setting file object which should be in the same folder as the actual code. 
         Scanner input = new Scanner(text, "UTF-8"); //setting scanner object
-		Words[] wordsArr = new Words[100000]; //creating the words array
+		//Words[] wordsArr = new Words[100000]; //creating the words array
 
 		for(int z = 0; z < wordsArr.length; z++){ //intializing ever object
 			wordsArr[z] = new Words();
 		}
 		
-		launch(args);
-
-
-		int totalWords = 0;
+		
+		
         
         boolean start = false;//used for the start and end of the poem
         
@@ -218,7 +268,8 @@ public class App extends Application{
 	for(int q = 0; q < 20; q++) { //prints top 20 results
 		System.out.println(wordsArr[q].key + "       " + wordsArr[q].count);
 	}
-
+	
+	launch(args);
 	
 	}
         
