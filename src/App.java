@@ -226,16 +226,16 @@ public class App extends Application{
 	
 	
 
-/* This current code will print to the server that is connected. However, currently testing without the server
+	//This current code will print to the server that is connected. However, currently testing without the server
 	try{
 		
     Class.forName(driverName);
 	}catch(ClassNotFoundException e){
 		e.printStackTrace();
 	}
-*/
+
 	
-	/*
+
 
 	try{ //creates teh connection to
     Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/word_occurances", "root", "megahose");
@@ -264,8 +264,7 @@ public class App extends Application{
 	}catch(SQLException e){
 		e.printStackTrace();
 	}
-	
-	*/
+
 	
 
 	bubbleSort(wordsArr, totalWords); //sorts the array
@@ -275,12 +274,12 @@ public class App extends Application{
 	
 	wordsArr = reverseArr(wordsArr, totalWords); //reverse array
 	
-	/*
+	
 	for(int q = 0; q < 20; q++) { //prints top 20 results
 		System.out.println(wordsArr[q].key + "       " + wordsArr[q].count);
 	}
 	
-	*/
+	
 	
 	launch(args);
 	
