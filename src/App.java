@@ -49,6 +49,8 @@ public class App extends Application{
 				Scene scene = new Scene(root,700,100);
 				scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 				primaryStage.setScene(scene);
+				primaryStage.setResizable(false);
+				primaryStage.setTitle("Word Counter");
 				primaryStage.show();
 				load();
 			}catch(Exception e) {
@@ -272,10 +274,13 @@ public class App extends Application{
 
 	
 	wordsArr = reverseArr(wordsArr, totalWords); //reverse array
-
+	
+	/*
 	for(int q = 0; q < 20; q++) { //prints top 20 results
 		System.out.println(wordsArr[q].key + "       " + wordsArr[q].count);
 	}
+	
+	*/
 	
 	launch(args);
 	
